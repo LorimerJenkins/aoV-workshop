@@ -31,7 +31,7 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
       <div className={styles.imageInfo}>
         <h2>{mainImage.title}</h2>
         <p>
-        {mainImage.year}, {mainImage.artist}
+          {mainImage.year}, {mainImage.artist}
         </p>
         <button className={`${styles.tipButton} ${inika.className}`}>
           TIP
