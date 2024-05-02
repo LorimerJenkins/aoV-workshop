@@ -3,6 +3,7 @@ import styles from "../styles/ImageDisplay.module.css";
 import { Inika } from "next/font/google";
 import { transferAR } from "../arweaveUtils/transferAR";
 import { useApi } from "arweave-wallet-kit";
+import Image from "next/image";
 
 const inika = Inika({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -44,10 +45,12 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
 
   return (
     <div className={styles.imageDisplay}>
-      <img
+      <Image
         className={styles.mainImage}
         src={mainImage.url}
         alt={mainImage.title}
+        height={100}
+        width={200}
       />
       <div className={styles.imageInfo}>
         <h2>{mainImage.title}</h2>
