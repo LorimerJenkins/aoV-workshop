@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import Header from "../components/Header";
 import ImageDisplay from "../components/ImageDisplay";
 import { Inika } from "next/font/google";
+import { ArweaveWalletKit } from "arweave-wallet-kit";
 
 const inika = Inika({ subsets: ["latin"], weight: ["400", "700"] });
 
@@ -68,14 +69,20 @@ const Home: React.FC = () => {
   };
 
   return (
-    <div className={inika.className}>
-      <Header />
-      <ImageDisplay
-        mainImage={getMainImage()}
-        thumbnails={getThumbnails()}
-        onShuffle={shuffleImages}
-      />
-    </div>
+    <ArweaveWalletKit
+      config={{
+        permissions: ["ACCESS_ADDRESS", "SIGN_TRANSACTION"],
+      }}
+    >
+      <div className={inika.className}>
+        <Header />
+        <ImageDisplay
+          mainImage={getMainImage()}
+          thumbnails={getThumbnails()}
+          onShuffle={shuffleImages}
+        />
+      </div>
+    </ArweaveWalletKit>
   );
 };
 

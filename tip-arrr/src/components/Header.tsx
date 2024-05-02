@@ -1,9 +1,31 @@
 import React from "react";
 import styles from "../styles/Header.module.css";
 import { Inika } from "next/font/google";
+import { useLogin } from "../arweaveUtils/wallets";
+
 const inika = Inika({ subsets: ["latin"], weight: ["400", "700"] });
 
-const Header: React.FC = () => {
+const Header = () => {
+  const { login, logout, activeAddress } = useLogin();
+
+  const handleLogin = async () => {
+    if (activeAddress) {
+      await logout();
+    } else {
+      await login();
+    }
+  };
+
+  const getButtonText = () => {
+    if (activeAddress) {
+      const startChars = activeAddress.slice(0, 3);
+      const endChars = activeAddress.slice(-3);
+      return `${startChars}...${endChars}`;
+    } else {
+      return "Login";
+    }
+  };
+
   return (
     <header className={styles.header}>
       <div className={styles.logoTitle}>
@@ -13,8 +35,11 @@ const Header: React.FC = () => {
           <p>(Spacebar to shuffle)</p>
         </div>
       </div>
-      <button className={`${styles.loginButton} ${inika.className}`}>
-        Login
+      <button
+        className={`${styles.loginButton} ${inika.className}`}
+        onClick={handleLogin}
+      >
+        {getButtonText()}
       </button>
     </header>
   );

@@ -7,9 +7,16 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "dragbuild": "next build && next export"
   },
   "dependencies": {
+    "@irys/sdk": "^0.1.22",
+    "@othent/kms": "^1.0.12",
+    "ar-gql": "^1.2.9",
+    "arweave": "^1.15.0",
+    "arweave-wallet-kit": "^1.0.4",
+    "axios": "^1.6.8",
     "next": "14.2.3",
     "prettier": "^3.2.5",
     "react": "^18",

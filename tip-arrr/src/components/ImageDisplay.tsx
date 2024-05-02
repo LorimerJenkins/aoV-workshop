@@ -1,6 +1,9 @@
 import React from "react";
 import styles from "../styles/ImageDisplay.module.css";
 import { Inika } from "next/font/google";
+import { transferAR } from "../arweaveUtils/transferAR";
+import { useApi } from "arweave-wallet-kit";
+
 const inika = Inika({ subsets: ["latin"], weight: ["400", "700"] });
 
 interface Image {
@@ -21,6 +24,24 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
   thumbnails,
   onShuffle,
 }) => {
+  const api = useApi();
+
+  const sendTip = async () => {
+    try {
+      const quantity = "0.00001";
+      const recipient = "79PC6eRRgSTxuaIQH_Fj6MqwBIvgkmw788p_j95hf98";
+      await transferAR(api, quantity, recipient);
+      alert("Tip sent successfully!");
+    } catch (error: any) {
+      console.error("Error sending tip:", error);
+      if (error.message === "Arweave Wallet not connected") {
+        alert("Please connect your Arweave Wallet to send a tip.");
+      } else {
+        alert("Failed to send tip. Please try again.");
+      }
+    }
+  };
+
   return (
     <div className={styles.imageDisplay}>
       <img
@@ -33,7 +54,10 @@ const ImageDisplay: React.FC<ImageDisplayProps> = ({
         <p>
           {mainImage.year}, {mainImage.artist}
         </p>
-        <button className={`${styles.tipButton} ${inika.className}`}>
+        <button
+          className={`${styles.tipButton} ${inika.className}`}
+          onClick={sendTip}
+        >
           TIP
         </button>
       </div>
